@@ -10,8 +10,8 @@ import java.util.Scanner;
  */
 public class LogisticsManagementSystem {
     
-    static Scanner input = new Scanner(System.in);
     
+    static Scanner input = new Scanner(System.in);
     //displaying menue
     static void printMenue(){
         System.out.println("\n==============================================");
@@ -35,19 +35,19 @@ public class LogisticsManagementSystem {
              
             switch (choice) {
                 case 1:
-                    manageCities();
+                    manageCities(); //calling managecities() function
                     break;
                 case 2:
-                    manageDistances();
+                    manageDistances(); //calling manageDistances() function
                     break;
                 case 3:
-                    manageVehicles();
+                    manageVehicles();  //calling managevehicles() function
                     break;
                 case 4:
-                    handleDeliveries();
+                    handleDeliveries(); //calling handleDeliveries() function 
                     break;
                 case 5:
-                    showReports();
+                    showReports(); //showReports() function
                     break;
                 case 6:
                     System.out.println("Exiting");
@@ -57,16 +57,13 @@ public class LogisticsManagementSystem {
             }
         } while (choice != 6);    
     }        
-        
+    
     static void manageCities(){
-        
- 
-              
-        
-        
-        
+       
     }
+    
     static void manageDistances(){
+       
     }
     static void manageVehicles(){
     }
