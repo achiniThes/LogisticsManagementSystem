@@ -15,6 +15,12 @@ public class LogisticsManagementSystem {
     static String[] cities = new String[30];
     static int cityCount = 0;
     static double [][] distances=new double[30][30];
+    
+    static String[] vehicleTypes = {"Van", "Truck", "Lorry"};
+    static int[] vehiclCcapacity = {1000, 5000, 10000};     
+    static int[] vehicleRate = {30, 40, 80};  //per km         
+    static int[] vehicleAvgSpeed = {60, 50, 45};            
+    static int[] vehicleFuelEfficiency = {12, 6, 4};            
 
    
     //displaying menue
@@ -69,6 +75,7 @@ public class LogisticsManagementSystem {
         System.out.println("1.Add a city");
         System.out.println("2.Rename a city");
         System.out.println("3.Remove a city");
+        System.out.println("4. Back to Main Menu");
         System.out.print("Enter your choice: ");
         int cityChoice = input.nextInt();
         input.nextLine(); 
@@ -76,7 +83,8 @@ public class LogisticsManagementSystem {
         switch (cityChoice){
             case 1->addcity(); //caling addcity() method
             case 2->renamecity(); //caling  renamecity() method
-            case 3->removecity(); //calling removecity() method    
+            case 3->removecity(); //calling removecity() method 
+            case 4-> System.out.println("Back to main menue..");//returning to main meue
             default->System.out.println("Invalid choice");    
                     
         }
@@ -150,7 +158,7 @@ public class LogisticsManagementSystem {
         }
     } 
     
-    
+    //Distance management
     static void manageDistances(){
         if (cityCount < 2) { //checking whether there at least two cities to measure distance
             System.out.println("There is no at least 2 cities to measure distance");
@@ -160,12 +168,14 @@ public class LogisticsManagementSystem {
         System.out.println("\n--Manage Distances--"); //Asking the requirement
         System.out.println("1. Input/edit distance");
         System.out.println("2. Show distance table");
+        System.out.println("3. Back to Main Menu");
         System.out.print("Enter your choice: ");
         int choice = input.nextInt();
 
         switch (choice) {
             case 1->enterDistance();
             case 2->showDistanceTable();
+            case 3-> System.out.println("Back to main menue..");//returning to main meue
             default->System.out.println("Invalid choice");
         }
     }
@@ -221,12 +231,23 @@ public class LogisticsManagementSystem {
 
     }
 
-        
+    //Vehical management    
     static void manageVehicles(){
+        System.out.println("\n--Vehicle Management--");
+        System.out.println(" Vehicle type   Capacity (kg)   Rate per km (LKR)   Avg Speed (km/h)   Fuel Efficiency (km/l)");
+    
+        for (int i = 0; i < vehicleTypes.length; i++) { //loop through 3 vehicle types
+            System.out.printf("%8s   %15d   %13d   %15d   %15d%n",vehicleTypes[i],  vehiclCcapacity [i], vehicleRate [i],vehicleAvgSpeed[i],vehicleFuelEfficiency [i]);
+                     
+        }         
+                      
+    }                  
+            
+              
         
+                
         
-        
-    }
+    
     static void handleDeliveries(){
     }
     static void showReports(){
