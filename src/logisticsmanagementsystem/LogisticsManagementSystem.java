@@ -14,7 +14,7 @@ public class LogisticsManagementSystem {
     static Scanner input = new Scanner(System.in);
     static String[] cities = new String[30];
     static int cityCount = 0;
-    static int [][] distances=new int[30][30];
+    static double [][] distances=new double[30][30];
 
    
     //displaying menue
@@ -113,7 +113,7 @@ public class LogisticsManagementSystem {
         if (index >= 0 && index < cityCount) {
             System.out.print("Enter new city name: ");
             cities[index] = input.nextLine(); //storing renamed city
-            System.out.println(" City having index "+index+ "renamed to "+ cities[index]);
+            System.out.println(" City having index "+index+ " renamed to "+ cities[index]);
         }    
         else {
             System.out.println("Invalid city index");
@@ -133,15 +133,17 @@ public class LogisticsManagementSystem {
             
         }
         
-        System.out.print("Enter index of the city to remove: ");
+        System.out.print("Enter index of the city to remove:");
         int index = input.nextInt();
         
         if (index >= 0 && index < cityCount) {
+            String removedCity = cities[index];
+            
             for (int i = index; i < cityCount - 1; i++) {  //shifting cities to the left after removing relavant city
-                cities[i] = cities[i + 1];
+                cities[i] = cities[i +1];
             }
             cityCount--;  //decreasing city counter
-            System.out.println(cities[index]+"city removed");
+            System.out.println(removedCity+" city removed");
         } 
         else {
             System.out.println("Invalid city index");
@@ -162,26 +164,68 @@ public class LogisticsManagementSystem {
         int choice = input.nextInt();
 
         switch (choice) {
-            case 1 -> enterDistance();
-            case 2 -> showDistanceTable();
-            default -> System.out.println("Invalid choice");
+            case 1->enterDistance();
+            case 2->showDistanceTable();
+            default->System.out.println("Invalid choice");
         }
     }
     
     static void enterDistance(){
+        
+        for (int i = 0; i < cityCount; i++) { //city list
+        System.out.println(i + ") " + cities[i]);
+        }
+        
+        System.out.print("Enter index of city1:"); //getting start point city index
+        int city1 = input.nextInt();
+
+        System.out.print("Enter index of city2:"); //getting destination city index
+        int city2 = input.nextInt();
+        
+        if (city1 == city2) {
+        System.out.println("Distance from a city to itself must be 0");
+        return;
+        }
+        
+        System.out.print("Enter distance between two cities in km:");
+        double cityDistance = input.nextDouble();
+        
+        distances[city1][city2] = cityDistance;//storing distances in an array
+        distances[city2][city1] = cityDistance; 
+        System.out.println("Distance updated....");
 
     }
     static void showDistanceTable(){
+        if (cityCount == 0) {  //checking city count
+        System.out.println("No cities added....");
+        return;
+        }
+
+        System.out.println("\n--Distance table--"); //creating distance table
+        System.out.print("        ");
+        
+        for (int i = 0; i < cityCount; i++) { 
+            System.out.printf("%8s",cities[i]);
+        }
+        
+        System.out.println();
+        
+        for (int i = 0; i < cityCount; i++) {  
+            System.out.printf("%8s",cities[i]); //adding city names in row
+                for (int j = 0; j < cityCount; j++) {
+                    System.out.printf("%8.1f",distances[i][j]); // adding city distances
+                }
+        System.out.println();
+        }
+        
 
     }
 
-
-    
         
-                
-       
-    
     static void manageVehicles(){
+        
+        
+        
     }
     static void handleDeliveries(){
     }
