@@ -14,6 +14,7 @@ public class LogisticsManagementSystem {
     static Scanner input = new Scanner(System.in);
     static String[] cities = new String[30];
     static int cityCount = 0;
+    static int [][] distances=new int[30][30];
 
    
     //displaying menue
@@ -149,10 +150,37 @@ public class LogisticsManagementSystem {
     
     
     static void manageDistances(){
+        if (cityCount < 2) { //checking whether there at least two cities to measure distance
+            System.out.println("There is no at least 2 cities to measure distance");
+            return;
+        }
+
+        System.out.println("\n--Manage Distances--"); //Asking the requirement
+        System.out.println("1. Input/edit distance");
+        System.out.println("2. Show distance table");
+        System.out.print("Enter your choice: ");
+        int choice = input.nextInt();
+
+        switch (choice) {
+            case 1 -> enterDistance();
+            case 2 -> showDistanceTable();
+            default -> System.out.println("Invalid choice");
+        }
+    }
+    
+    static void enterDistance(){
+
+    }
+    static void showDistanceTable(){
+
+    }
+
+
+    
         
                 
        
-    }
+    
     static void manageVehicles(){
     }
     static void handleDeliveries(){
