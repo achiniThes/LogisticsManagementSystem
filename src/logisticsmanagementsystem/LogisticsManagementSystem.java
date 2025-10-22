@@ -304,6 +304,24 @@ public class LogisticsManagementSystem {
             System.out.println("Weight exceeds....");
             return;
         }
+        
+        // Cost, Time, and Fuel Calculation
+        double D = distances[city1][city2];
+        double R = vehicleRate[v]; //from vehicle type
+        double S = vehicleAvgSpeed[v];  //km/h
+        double E = vehicleFuelEfficiency[v];
+        double F=310.0; //fuel price
+        
+        //calculations
+        double deliveryCost= D*R*(1+w/10000);
+        double estimatedDeliveryTime=D/S; //hours
+        double fuelConsumption=D/E;
+        double fuelCost=fuelConsumption*F;
+        double totalCost=deliveryCost+fuelCost;
+        double profit=deliveryCost*0.25;
+        double customerCharge=totalCost+profit;
+
+        
 
     }
     
