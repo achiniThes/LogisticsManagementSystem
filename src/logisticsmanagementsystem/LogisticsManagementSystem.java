@@ -263,6 +263,7 @@ public class LogisticsManagementSystem {
               
     //Delivery Request Handling/Cost, Time, and Fuel Calculations/Delivery Records/ Finding The Least-Cost Route (Least-Distance)
     static void handleDeliveries(){
+        System.out.println("--Handling Deliveries--");
         if (cityCount < 2) { //checking whether there at least two cities to measure distance
             System.out.println("There is no at least 2 cities to measure distance");
             return;
@@ -320,6 +321,15 @@ public class LogisticsManagementSystem {
         double totalCost=deliveryCost+fuelCost;
         double profit=deliveryCost*0.25;
         double customerCharge=totalCost+profit;
+        
+        //Delivery records
+        sourceCity[deliveryCount] = cities[city1];
+        destinationCity[deliveryCount] = cities[city2];
+        vehicletype[deliveryCount] = vehicleTypes[v];
+        weight[deliveryCount] = w;
+        cost[deliveryCount] = customerCharge;
+        time[deliveryCount] = estimatedDeliveryTime;
+        deliveryCount++;
 
         
 
