@@ -17,10 +17,20 @@ public class LogisticsManagementSystem {
     static double [][] distances=new double[30][30];
     
     static String[] vehicleTypes = {"Van", "Truck", "Lorry"};
-    static int[] vehiclCcapacity = {1000, 5000, 10000};     
+    static int[] vehiclecapacity = {1000, 5000, 10000};     
     static int[] vehicleRate = {30, 40, 80};  //per km         
     static int[] vehicleAvgSpeed = {60, 50, 45};            
-    static int[] vehicleFuelEfficiency = {12, 6, 4};            
+    static int[] vehicleFuelEfficiency = {12, 6, 4};    
+    
+    static String[] sourceCity = new String[50]; //assuming maximum deiliveries is 50
+    static String[] destinationCity = new String[50];
+    static double[] weight = new double[50];
+    static String[] vehicletype = new String[50];
+    
+    
+    static double[] cost = new double[50];
+    static double[] time = new double[50];
+    static int deliveryCount = 0;
 
    
     //displaying menue
@@ -244,19 +254,59 @@ public class LogisticsManagementSystem {
         System.out.println(" Vehicle type   Capacity (kg)   Rate per km (LKR)   Avg Speed (km/h)   Fuel Efficiency (km/l)");
     
         for (int i = 0; i < vehicleTypes.length; i++) { //loop through 3 vehicle types
-            System.out.printf("%8s   %15d   %13d   %15d   %15d%n",vehicleTypes[i],  vehiclCcapacity [i], vehicleRate [i],vehicleAvgSpeed[i],vehicleFuelEfficiency [i]);
+            System.out.printf("%8s   %15d   %13d   %15d   %15d%n",vehicleTypes[i],  vehiclecapacity [i], vehicleRate [i],vehicleAvgSpeed[i],vehicleFuelEfficiency [i]);
                      
         }         
                       
     }                  
             
               
-        
-                
-        
-    
+    //Delivery Request Handling/Cost, Time, and Fuel Calculations/Delivery Records/ Finding The Least-Cost Route (Least-Distance)
     static void handleDeliveries(){
+        if (cityCount < 2) { //checking whether there at least two cities to measure distance
+            System.out.println("There is no at least 2 cities to measure distance");
+            return;
+        }
+        
+        for (int i = 0; i < cityCount; i++) { //city list
+            System.out.println(i + ") " + cities[i]);
+        }
+        
+        System.out.print("Enter index of city1:"); //getting source city index
+        int city1 = input.nextInt();
+
+        System.out.print("Enter index of city2:"); //getting destination city index
+        int city2 = input.nextInt();
+        
+        if (city1 == city2) {
+            System.out.println("Same city entered twice");
+            return;
+        }
+        
+        System.out.print("Enter weight in kg: ");
+        double w = input.nextDouble();
+        
+         System.out.println("\n--Vehicle types--");
+         for (int i = 0; i < vehicleTypes.length; i++) {
+            System.out.printf("%d. %s (Capacity: %dkg, Rate per km: %d)\n",
+                (i + 1), vehicleTypes[i], vehiclecapacity[i], vehicleRate[i]);  //showing list of vehicals with there details
+        }
+
+        System.out.print("Select vehicle (1-" + vehicleTypes.length + "): ");
+        int v = input.nextInt() - 1;  //selecting which vehical to carry pacakage
+
+        if (v < 0 || v >= vehicleTypes.length) { //v-vehical index
+            System.out.println("Invalid selection....");
+            return;
+        }
+
+        if (w >vehiclecapacity[v]) {
+            System.out.println("Weight exceeds....");
+            return;
+        }
+
     }
+    
     static void showReports(){
     }
     
