@@ -71,16 +71,18 @@ public class LogisticsManagementSystem {
     
     //city management
     static void manageCities(){
+        int choice;
+        do{
         System.out.println("\n--Manage Cities--");
         System.out.println("1.Add a city");
         System.out.println("2.Rename a city");
         System.out.println("3.Remove a city");
-        System.out.println("4. Back to Main Menu");
+        System.out.println("4.Back to Main Menu");
         System.out.print("Enter your choice: ");
-        int cityChoice = input.nextInt();
+        choice = input.nextInt();
         input.nextLine(); 
         
-        switch (cityChoice){
+        switch (choice){
             case 1->addcity(); //caling addcity() method
             case 2->renamecity(); //caling  renamecity() method
             case 3->removecity(); //calling removecity() method 
@@ -88,7 +90,9 @@ public class LogisticsManagementSystem {
             default->System.out.println("Invalid choice");    
                     
         }
+        }while(choice!=4);
     }
+        
     
     static void addcity(){  //adding a new city
         if (cityCount >= 30) {
@@ -164,13 +168,15 @@ public class LogisticsManagementSystem {
             System.out.println("There is no at least 2 cities to measure distance");
             return;
         }
-
+        int choice;
+        do{
         System.out.println("\n--Manage Distances--"); //Asking the requirement
         System.out.println("1. Input/edit distance");
         System.out.println("2. Show distance table");
         System.out.println("3. Back to Main Menu");
         System.out.print("Enter your choice: ");
-        int choice = input.nextInt();
+        choice = input.nextInt();
+        
 
         switch (choice) {
             case 1->enterDistance();
@@ -178,6 +184,7 @@ public class LogisticsManagementSystem {
             case 3-> System.out.println("Back to main menue..");//returning to main meue
             default->System.out.println("Invalid choice");
         }
+        }while(choice!=3);
     }
     
     static void enterDistance(){
