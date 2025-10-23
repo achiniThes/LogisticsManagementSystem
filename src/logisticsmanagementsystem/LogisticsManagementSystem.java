@@ -362,6 +362,7 @@ public class LogisticsManagementSystem {
        
     }
     
+    //finding least cost rout
     static void leastCostRoute(){
         if (cityCount < 2) {
         System.out.println("There is no at least 2 cities");
@@ -418,8 +419,34 @@ public class LogisticsManagementSystem {
             }
         }
     }
-        
+    
+    //performance report    
     static void showReports(){
+        if (deliveryCount == 0) {  //there should be atleast 1 deilivery
+        System.out.println("No deliveries records added");
+        return;
+        }
+
+        double totalRevenue = 0;
+        double totTime = 0;
+
+        System.out.println("\n--DELIVERY REPORTS--");
+        System.out.printf("%-5s %-15s %-15s %-10s %-10s %-10s\n",
+            "No", "From", "To", "Vehicle", "Charge(LKR)", "Time(hrs)");
+
+        for (int i = 0; i < deliveryCount; i++) {
+            System.out.printf("%-5d %-15s %-15s %-10s %-10.2f %-10.2f\n",
+                    (i + 1), sourceCity[i], destinationCity[i], vehicletype[i], cost[i], time[i]);
+
+            totalRevenue += cost[i];
+            totTime += time[i];
+        }
+        double averageDiliveryTime=totTime / deliveryCount;
+
+        System.out.println("                                   ");
+        System.out.println("Total Deliveries: "+deliveryCount);
+        System.out.println("Total Revenue: "+totalRevenue+" LKR");
+        System.out.println("Average Delivery Time: "+averageDiliveryTime+" hours" );
             
     }
     static void saveData(){
