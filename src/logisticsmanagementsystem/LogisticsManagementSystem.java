@@ -135,7 +135,7 @@ public class LogisticsManagementSystem {
         if (index >= 0 && index < cityCount) {
             System.out.print("Enter new city name: ");
             cities[index] = input.nextLine(); //storing renamed city
-            System.out.println(" City having index "+index+ " renamed to "+ cities[index]);
+            System.out.println("City having index "+index+ " renamed to "+ cities[index]);
         }    
         else {
             System.out.println("Invalid city index");
@@ -330,10 +330,30 @@ public class LogisticsManagementSystem {
         cost[deliveryCount] = customerCharge;
         time[deliveryCount] = estimatedDeliveryTime;
         deliveryCount++;
-
+        
+        //summary
+        System.out.println("\n===============================");
+        System.out.println("     DELIVERY COST SUMMARY     ");
+        System.out.println("===============================");
+        System.out.println("From: " + cities[city1]);
+        System.out.println("To: " + cities[city2]);
+        System.out.println("Distance: "+D+" km");
+        System.out.println("Vehicle: " + vehicleTypes[v]);
+        System.out.println("Weight: "+w+" kg");
+        System.out.println("Base Cost: "+ deliveryCost+ "LKR");
+        System.out.println("Fuel Used: "+fuelConsumption+" L");
+        System.out.println("Fuel Cost: "+fuelCost+" LKR");
+        System.out.println("Optional Cost: "+totalCost+" LKR");
+        System.out.println("Profit: "+profit+" LKR");
+        System.out.println("Customer Charge: "+customerCharge+" LKR");
+        System.out.println("Estimated Time: "+estimatedDeliveryTime+" hours");
+        System.out.println("===============================");
+        
+       
+    }
         
 
-    }
+    
     
     static void showReports(){
     }
