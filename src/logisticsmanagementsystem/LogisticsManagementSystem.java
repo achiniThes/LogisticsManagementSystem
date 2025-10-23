@@ -31,6 +31,9 @@ public class LogisticsManagementSystem {
     static double[] cost = new double[50];
     static double[] time = new double[50];
     static int deliveryCount = 0;
+    
+    static double minimumDistance;
+    static String bestPath = "";
 
    
     //displaying menue
@@ -360,10 +363,64 @@ public class LogisticsManagementSystem {
     }
     
     static void leastCostRoute(){
+        if (cityCount < 2) {
+        System.out.println("There is no at least 2 cities");
+        return;
+        }
+
+        for (int i = 0; i < cityCount; i++) { //city list
+        System.out.println(i + ") " + cities[i]);
+        }
+        
+        System.out.print("Enter source city index: ");
+        int city1 = input.nextInt();
+        System.out.print("Enter destination city index: ");
+        int city2 = input.nextInt();
+
+        if (city1 == city2) {
+            System.out.println("Source and destination cannot be the same!are same");
+        }
+
+        boolean[] visited = new boolean[cityCount];
+        visited[city1] = true;
+        minimumDistance = Double.MAX_VALUE;
+        bestPath = "";
+
+        searchingRoute(city1, city2, visited, 0, cities[city1]);
+
+        if (bestPath.isEmpty()) {
+            System.out.println("No valid path found");
+        } 
+        else{
+        System.out.println("--Least Cost Result--");
+        System.out.println("                              ");
+        System.out.println("Shortest Route: " + bestPath);
+        System.out.printf("Total Distance: %.2f km%n", minimumDistance);
+       
+        }
+    }
+
+
+    static void searchingRoute(int current, int dest, boolean[] visited, double totalDist, String path) {
+        if (current == dest) {
+            if (totalDist < minimumDistance) {
+                minimumDistance = totalDist;
+                bestPath = path;
+            }
+            return;
+        }
+
+        for (int i = 0; i < cityCount; i++) {
+            if (!visited[i] && distances[current][i] > 0) {
+                visited[i] = true;
+                searchingRoute(i, dest, visited, totalDist + distances[current][i], path + " -> " + cities[i]);
+                visited[i] = false; // backtrack
+            }
+        }
     }
         
     static void showReports(){
-        
+            
     }
     static void saveData(){
     }
