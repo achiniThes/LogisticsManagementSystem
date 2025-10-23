@@ -42,8 +42,9 @@ public class LogisticsManagementSystem {
         System.out.println("2. Manage Distances");
         System.out.println("3. Manage Vehicles");
         System.out.println("4. Handle Deliveries");
-        System.out.println("5. Reports");
-        System.out.println("6. Exit");
+        System.out.println("5. Finding The Least-Cost Route (Least-Distance)");
+        System.out.println("6. Reports");
+        System.out.println("7. Exit");
         System.out.print("Enter your choice: ");
         
     }
@@ -68,9 +69,15 @@ public class LogisticsManagementSystem {
                     handleDeliveries(); //calling handleDeliveries() function 
                     break;
                 case 5:
+                    leastCostRoute(); //calling handleDeliveries() function 
+                    break;    
+                case 6:
                     showReports(); //showReports() function
                     break;
-                case 6:
+                case 7:
+                    saveData(); //calling handleDeliveries() function 
+                    break;    
+                case 8:
                     System.out.println("Exiting");
                     break;
                 default:
@@ -351,12 +358,14 @@ public class LogisticsManagementSystem {
         
        
     }
-        
-
     
-    
-    static void showReports(){
+    static void leastCostRoute(){
     }
-    
+        
+    static void showReports(){
+        
+    }
+    static void saveData(){
+    }
 
 }
