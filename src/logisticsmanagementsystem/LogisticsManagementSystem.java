@@ -37,7 +37,7 @@ public class LogisticsManagementSystem {
 
    
     //displaying menue
-    static void printMenue(){
+    public static void printMenue(){
         System.out.println("\n==============================================");
         System.out.println("     LOGISTICS MANAGEMENT SYSTEM      ");
         System.out.println("==============================================");
@@ -53,6 +53,7 @@ public class LogisticsManagementSystem {
     }
     //main method
     public static void main(String[] args) {
+        loadData();  // Load data from files 
         int choice;
         do{
             printMenue();
@@ -90,7 +91,7 @@ public class LogisticsManagementSystem {
     }        
     
     //city management
-    static void manageCities(){
+    public static void manageCities(){
         int choice;
         do{
         System.out.println("\n--Manage Cities--");
@@ -114,7 +115,7 @@ public class LogisticsManagementSystem {
     }
         
     
-    static void addcity(){  //adding a new city
+    public static void addcity(){  //adding a new city
         if (cityCount >= 30) {
             System.out.println("City limit exceeded");
             return;
@@ -128,7 +129,7 @@ public class LogisticsManagementSystem {
         
     }
     
-    static void renamecity(){  //renameing a city
+    public static void renamecity(){  //renameing a city
         if (cityCount == 0) {  //checking whether if there are cities to rename
             System.out.println("No cities added yet");
             return;
@@ -154,7 +155,7 @@ public class LogisticsManagementSystem {
     }
     
     
-    static void removecity(){ //removeing a city
+    public static void removecity(){ //removeing a city
         if (cityCount == 0) { //checking whther is there any cities added to remove
             System.out.println("No cities added yet");
             return;
@@ -183,7 +184,7 @@ public class LogisticsManagementSystem {
     } 
     
     //Distance management
-    static void manageDistances(){
+    public static void manageDistances(){
         if (cityCount < 2) { //checking whether there at least two cities to measure distance
             System.out.println("There is no at least 2 cities to measure distance");
             return;
@@ -207,7 +208,7 @@ public class LogisticsManagementSystem {
         }while(choice!=3);
     }
     
-    static void enterDistance(){
+    public static void enterDistance(){
         
         for (int i = 0; i < cityCount; i++) { //city list
         System.out.println(i + ") " + cities[i]);
@@ -232,7 +233,7 @@ public class LogisticsManagementSystem {
         System.out.println("Distance updated....");
 
     }
-    static void showDistanceTable(){
+    public static void showDistanceTable(){
         if (cityCount == 0) {  //checking city count
         System.out.println("No cities added....");
         return;
@@ -259,7 +260,7 @@ public class LogisticsManagementSystem {
     }
 
     //Vehical management    
-    static void manageVehicles(){
+    public static void manageVehicles(){
         System.out.println("\n--Vehicle Management--");
         System.out.println(" Vehicle type   Capacity (kg)   Rate per km (LKR)   Avg Speed (km/h)   Fuel Efficiency (km/l)");
     
@@ -272,7 +273,7 @@ public class LogisticsManagementSystem {
             
               
     //Delivery Request Handling/Cost, Time, and Fuel Calculations/Delivery Records/ Finding The Least-Cost Route (Least-Distance)
-    static void handleDeliveries(){
+    public static void handleDeliveries(){
         System.out.println("--Handling Deliveries--");
         if (cityCount < 2) { //checking whether there at least two cities to measure distance
             System.out.println("There is no at least 2 cities to measure distance");
@@ -350,20 +351,20 @@ public class LogisticsManagementSystem {
         System.out.println("Distance: "+D+" km");
         System.out.println("Vehicle: " + vehicleTypes[v]);
         System.out.println("Weight: "+w+" kg");
-        System.out.println("Base Cost: "+ deliveryCost+ "LKR");
-        System.out.println("Fuel Used: "+fuelConsumption+" L");
-        System.out.println("Fuel Cost: "+fuelCost+" LKR");
-        System.out.println("Optional Cost: "+totalCost+" LKR");
-        System.out.println("Profit: "+profit+" LKR");
-        System.out.println("Customer Charge: "+customerCharge+" LKR");
-        System.out.println("Estimated Time: "+estimatedDeliveryTime+" hours");
-        System.out.println("===============================");
+        System.out.printf("Base Cost: %.2f LKR\n ",deliveryCost);
+        System.out.printf("Fuel Used: %.2f L\n"+fuelConsumption);
+        System.out.printf("Fuel Cost: %.2f LKR\n"+fuelCost);
+        System.out.printf("Optional Cost: %.2f LKR\n"+totalCost);
+        System.out.printf("Profit: %.2f LKR\n"+profit);
+        System.out.printf("Customer Charge: %.2f LKR\n"+customerCharge);
+        System.out.printf("Estimated Time: %.2f hours\n"+estimatedDeliveryTime);
+        System.out.printf("===============================");
         
        
     }
     
     //finding least cost rout
-    static void leastCostRoute(){
+    public static void leastCostRoute(){
         if (cityCount < 2) {
         System.out.println("There is no at least 2 cities");
         return;
@@ -379,15 +380,15 @@ public class LogisticsManagementSystem {
         int city2 = input.nextInt();
 
         if (city1 == city2) {
-            System.out.println("Source and destination cannot be the same!are same");
+            System.out.println("Source and destination are same");
         }
 
-        boolean[] visited = new boolean[cityCount];
+        boolean[] visited = new boolean[cityCount]; //route search
         visited[city1] = true;
         minimumDistance = Double.MAX_VALUE;
         bestPath = "";
 
-        searchingRoute(city1, city2, visited, 0, cities[city1]);
+        searchingRoute(city1, city2, visited, 0, cities[city1]);  //calling seachingroute method(all possible routes)
 
         if (bestPath.isEmpty()) {
             System.out.println("No valid path found");
@@ -395,14 +396,14 @@ public class LogisticsManagementSystem {
         else{
         System.out.println("--Least Cost Result--");
         System.out.println("                              ");
-        System.out.println("Shortest Route: " + bestPath);
+        System.out.println("Shortest Route: " + bestPath); //displaying the results
         System.out.printf("Total Distance: %.2f km%n", minimumDistance);
        
         }
     }
 
-
-    static void searchingRoute(int current, int dest, boolean[] visited, double totalDist, String path) {
+    //searching possible roads until reach the destination
+    public static void searchingRoute(int current, int dest, boolean[] visited, double totalDist, String path) {
         if (current == dest) {
             if (totalDist < minimumDistance) {
                 minimumDistance = totalDist;
@@ -415,13 +416,13 @@ public class LogisticsManagementSystem {
             if (!visited[i] && distances[current][i] > 0) {
                 visited[i] = true;
                 searchingRoute(i, dest, visited, totalDist + distances[current][i], path + " -> " + cities[i]);
-                visited[i] = false; // backtrack
+                visited[i] = false; 
             }
         }
     }
     
     //performance report    
-    static void showReports(){
+    public static void showReports(){
         if (deliveryCount == 0) {  //there should be atleast 1 deilivery
         System.out.println("No deliveries records added");
         return;
@@ -430,11 +431,11 @@ public class LogisticsManagementSystem {
         double totalRevenue = 0;
         double totTime = 0;
 
-        System.out.println("\n--DELIVERY REPORTS--");
+        System.out.println("\n--Performance Report--");  //as table form
         System.out.printf("%-5s %-15s %-15s %-10s %-10s %-10s\n",
             "No", "From", "To", "Vehicle", "Charge(LKR)", "Time(hrs)");
 
-        for (int i = 0; i < deliveryCount; i++) {
+        for (int i = 0; i < deliveryCount; i++) { //loping through each deilivery
             System.out.printf("%-5d %-15s %-15s %-10s %-10.2f %-10.2f\n",
                     (i + 1), sourceCity[i], destinationCity[i], vehicletype[i], cost[i], time[i]);
 
@@ -443,13 +444,37 @@ public class LogisticsManagementSystem {
         }
         double averageDiliveryTime=totTime / deliveryCount;
 
-        System.out.println("                                   ");
+        System.out.println("                                   ");  //summary
         System.out.println("Total Deliveries: "+deliveryCount);
         System.out.println("Total Revenue: "+totalRevenue+" LKR");
         System.out.println("Average Delivery Time: "+averageDiliveryTime+" hours" );
             
     }
-    static void saveData(){
+    
+    //file handling
+    public static void saveData(){ //saving data
+        saveRoutes();
+        saveDeliveries();
+        
+        
     }
+    public static void loadData(){ //loading data
+        loadRoutes();
+        loadDeliveries();
+    }
+    
+    public static void saveRoutes() {
+    }
+    public static void saveDeliveries() {
+    }
+    public static void loadRoutes() {
+    }
+    public static void loadDeliveries() {
+    }
+   
+    
+    
+        
 
 }
+
