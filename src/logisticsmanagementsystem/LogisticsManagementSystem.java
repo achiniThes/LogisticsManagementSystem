@@ -4,6 +4,9 @@
  */
 package logisticsmanagementsystem;
 import java.util.Scanner;
+import java.io.File;
+import java.io.PrintWriter;
+
 /**
  *
  * @author HP
@@ -73,21 +76,20 @@ public class LogisticsManagementSystem {
                     handleDeliveries(); //calling handleDeliveries() function 
                     break;
                 case 5:
-                    leastCostRoute(); //calling handleDeliveries() function 
+                    leastCostRoute(); //calling leastCostRoute() function 
                     break;    
                 case 6:
                     showReports(); //showReports() function
                     break;
                 case 7:
-                    saveData(); //calling handleDeliveries() function 
+                    saveData();//saving data
+                    System.out.println("Exiting...Data saved");
                     break;    
-                case 8:
-                    System.out.println("Exiting");
-                    break;
+              
                 default:
-                    System.out.println("Invalid choice");
+                    System.out.println("Invalid choice.....");
             }
-        } while (choice != 6);    
+        } while (choice != 7);    
     }        
     
     //city management
@@ -352,12 +354,12 @@ public class LogisticsManagementSystem {
         System.out.println("Vehicle: " + vehicleTypes[v]);
         System.out.println("Weight: "+w+" kg");
         System.out.printf("Base Cost: %.2f LKR\n ",deliveryCost);
-        System.out.printf("Fuel Used: %.2f L\n"+fuelConsumption);
-        System.out.printf("Fuel Cost: %.2f LKR\n"+fuelCost);
-        System.out.printf("Optional Cost: %.2f LKR\n"+totalCost);
-        System.out.printf("Profit: %.2f LKR\n"+profit);
-        System.out.printf("Customer Charge: %.2f LKR\n"+customerCharge);
-        System.out.printf("Estimated Time: %.2f hours\n"+estimatedDeliveryTime);
+        System.out.printf("Fuel Used: %.2f L\n",fuelConsumption);
+        System.out.printf("Fuel Cost: %.2f LKR\n",fuelCost);
+        System.out.printf("Optional Cost: %.2f LKR\n",totalCost);
+        System.out.printf("Profit: %.2f LKR\n",profit);
+        System.out.printf("Customer Charge: %.2f LKR\n",customerCharge);
+        System.out.printf("Estimated Time: %.2f hours\n",estimatedDeliveryTime);
         System.out.printf("===============================");
         
        
@@ -446,8 +448,8 @@ public class LogisticsManagementSystem {
 
         System.out.println("                                   ");  //summary
         System.out.println("Total Deliveries: "+deliveryCount);
-        System.out.println("Total Revenue: "+totalRevenue+" LKR");
-        System.out.println("Average Delivery Time: "+averageDiliveryTime+" hours" );
+        System.out.printf("Total Revenue: %.2f LKR\n",totalRevenue);
+        System.out.printf("Average Delivery Time: %.2f hours\n",averageDiliveryTime);
             
     }
     
@@ -455,21 +457,89 @@ public class LogisticsManagementSystem {
     public static void saveData(){ //saving data
         saveRoutes();
         saveDeliveries();
+        System.out.println("Data saved successfully..");
         
         
     }
     public static void loadData(){ //loading data
         loadRoutes();
         loadDeliveries();
+        System.out.println("Data loaded successfully..");
     }
     
-    public static void saveRoutes() {
+    public static void saveRoutes() {  //save routes to text file
+        try (PrintWriter writer = new PrintWriter("routes.txt")) {
+        writer.println(cityCount);
+        for (int i = 0; i < cityCount; i++) {
+            writer.println(cities[i]);
+        }
+
+        for (int i = 0; i < cityCount; i++) {
+            for (int j = 0; j < cityCount; j++) {
+                writer.print(distances[i][j] + " ");
+            }
+            writer.println();
+        }
+        } catch (Exception e) {
+        System.out.println("Error in saving routes: " + e.getMessage());
+        }
+        
     }
+    
+    //saving deiliveries to text file
     public static void saveDeliveries() {
+        try (PrintWriter writer = new PrintWriter("deliveries.txt")) {
+        writer.println(deliveryCount);
+        for (int i = 0; i < deliveryCount; i++) {
+            writer.printf("%s,%s,%s,%.1f,%.2f,%.2f%n",
+                    sourceCity[i], destinationCity[i], vehicletype[i],
+                    weight[i], cost[i], time[i]);
+        }
+        } catch (Exception e) {
+        System.out.println("Error in saving deliveries: " + e.getMessage());
+        }
     }
+    
+    //load fro text file
     public static void loadRoutes() {
+        File file = new File("routes.txt");
+        if (!file.exists()) return;
+
+        try (Scanner sc = new Scanner(file)) {
+            cityCount = Integer.parseInt(sc.nextLine().trim());
+            for (int i = 0; i < cityCount; i++) {
+                cities[i] = sc.nextLine().trim(); //load city names
+            }
+            
+            for (int i = 0; i < cityCount; i++) {
+                for (int j = 0; j < cityCount; j++) {
+                    if (sc.hasNextDouble()) distances[i][j] = sc.nextDouble();
+                }
+            }
+        } catch (Exception e) {
+        System.out.println("Error in loading routes: " + e.getMessage());
+        }
     }
+    
+    //load deiliveries from text file
     public static void loadDeliveries() {
+        File file = new File("deliveries.txt");
+        if (!file.exists()) return;
+
+        try (Scanner sc = new Scanner(file)) {
+            deliveryCount = Integer.parseInt(sc.nextLine().trim());
+            for (int i = 0; i < deliveryCount; i++) {
+             String[] data = sc.nextLine().split(",");
+                sourceCity[i] = data[0];
+                destinationCity[i] = data[1];
+                vehicletype[i] = data[2];
+                weight[i] = Double.parseDouble(data[3]);
+                cost[i] = Double.parseDouble(data[4]);
+                time[i] = Double.parseDouble(data[5]);
+            }
+        } catch (Exception e) {
+        System.out.println("Error in loading deliveries: " + e.getMessage());
+        }
     }
    
     
